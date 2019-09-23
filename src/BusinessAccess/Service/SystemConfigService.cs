@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Asset.Common.Exceptions;
 using BusinessAccess.Repository;
 using BusinessAccess.Service.Interface;
+using System.Threading;
 
 namespace BusinessAccess.Service
 {
@@ -16,11 +17,11 @@ namespace BusinessAccess.Service
             _systemConfigRepo = systemConfigRepo;
         }
 
-        public async Task<SystemConfiguration> GetSystemConfigAsync(string key)
+        public async Task<SystemConfiguration> GetSystemConfigAsync(string key, CancellationToken cancellationToken = default)
         {
             try
             {
-                return await _systemConfigRepo.GetAsync(x => x.KeyStr.Equals(key));
+                return await _systemConfigRepo.GetAsync(x => x.KeyStr.Equals(key), cancellationToken: cancellationToken);
             }
             catch (Exception e)
             {

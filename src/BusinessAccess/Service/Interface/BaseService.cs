@@ -8,6 +8,41 @@ namespace BusinessAccess.Service.Interface
 {
     public abstract class BaseService
     {
+        public readonly int _maxLogin = 3;
+
+        public int CaculateDayOfConfig(SystemConfiguration obj)
+        {
+            try
+            {
+                if (obj == null)
+                {
+                    return 1;
+                }
+                if (obj.ValueUnit.Equals(Unit.days.ToString()))
+                {
+                    return Int32.Parse(obj.Value);
+                }
+                if (obj.ValueUnit.Equals(Unit.weeks.ToString()))
+                {
+                    return Int32.Parse(obj.Value) * 7;
+                }
+                if (obj.ValueUnit.Equals(Unit.months.ToString()))
+                {
+                    var totals = 0;
+                    var value = Int32.Parse(obj.Value);
+                    var current = Clock.Now;
+                    for (int i = 0; i < value; i++)
+                    {
+                        int days = DateTime.DaysInMonth(current.Year, current.Month + i);
+                        totals = totals + days;
+                    }
+                    return totals;
+                }
+            }
+            catch (Exception e) { Log.Error("Something wrong when get system config {e}", e); }
+            return 1;
+        }
+
         public int CaculateMinutesOfConfig(SystemConfiguration obj)
         {
             try

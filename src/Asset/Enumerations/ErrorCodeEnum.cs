@@ -5,6 +5,11 @@
         SessionExpired,
         UserDeletedOrNotExisted,
         UserModifiedNotExits,
-        FailData
+        FailData,
+        UserInactive,
+        LoginFailed3Time,
+        IncorrectUser,
+        LoginFailed,
+        PasswordExpired
     }
 }
